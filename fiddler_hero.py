@@ -59,3 +59,24 @@ def hero_list(url, header):
 			print('\n', end = '')
 			flag = 0
             
+"""
+函数说明:根据equip_id查询武器名字和价格
+Parameters:
+    equip_id - 武器的ID
+    weapon_info - 存储所有武器的字典
+Returns:
+    weapon_name - 武器的名字
+    weapon_price - 武器的价格
+Author:
+    Jack Cui
+Blog:
+    http://blog.csdn.net/c406495762
+Modify:
+    2017-08-07
+"""
+def seek_weapon(equip_id, weapon_info):
+	for each_weapon in weapon_info:
+		if each_weapon['equip_id'] == str(equip_id):
+			weapon_name = each_weapon['name']
+			weapon_price = each_weapon['price']
+			return weapon_name, weapon_price
