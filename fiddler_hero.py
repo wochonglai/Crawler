@@ -80,3 +80,35 @@ def seek_weapon(equip_id, weapon_info):
 			weapon_name = each_weapon['name']
 			weapon_price = each_weapon['price']
 			return weapon_name, weapon_price
+"""
+函数说明:获取并打印出装信息
+Parameters:
+    url - GET请求地址，通过Fiddler抓包获取
+    header - headers信息
+    weapon_info - 存储所有武器的字典
+Returns:
+	无
+Author:
+    Jack Cui
+Blog:
+    http://blog.csdn.net/c406495762
+Modify:
+    2017-08-07
+"""
+def hero_info(url, header, weapon_info):
+	req = requests.get(url = url, headers = header).json()
+	print('\n历史上的%s:\n    %s' % (req['info']['name'], req['info']['history_intro']))
+	for each_equip_choice in req['info']['equip_choice']:
+		print('\n%s:\n   %s' % (each_equip_choice['title'], each_equip_choice['description']))
+		total_price = 0
+		flag = 0
+		for each_weapon in each_equip_choice['list']:
+			flag += 1
+			weapon_name, weapon_price = seek_weapon(each_weapon['equip_id'], weapon_info)
+			print('%s:%s' % (weapon_name, weapon_price), end = '\t')
+			if flag == 3:
+				print('\n', end = '')
+				flag = 0
+			total_price += int(weapon_price)
+		print('神装套件价格共计:%d' % total_price)
+
